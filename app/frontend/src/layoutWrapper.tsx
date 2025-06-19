@@ -5,6 +5,9 @@ import { MsalProvider } from "@azure/msal-react";
 import { LoginContext } from "./loginContext";
 import Layout from "./pages/layout/Layout";
 
+const uiTitle = import.meta.env.VITE_UI_TITLE || "My App";
+const uiLogo = import.meta.env.VITE_UI_LOGO;
+
 const LayoutWrapper = () => {
     const [loggedIn, setLoggedIn] = useState(false);
     if (useLogin) {
@@ -40,7 +43,7 @@ const LayoutWrapper = () => {
                         setLoggedIn
                     }}
                 >
-                    <Layout />
+                    <Layout uiTitle={uiTitle} uiLogo={uiLogo} />
                 </LoginContext.Provider>
             </MsalProvider>
         );
@@ -52,7 +55,7 @@ const LayoutWrapper = () => {
                     setLoggedIn
                 }}
             >
-                <Layout />
+                <Layout uiTitle={uiTitle} uiLogo={uiLogo} />
             </LoginContext.Provider>
         );
     }
