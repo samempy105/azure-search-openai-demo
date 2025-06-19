@@ -137,6 +137,11 @@
         display: inline-block;
         vertical-align: middle;
     }
+    
+    .logo {
+      height: 32px;
+      margin-right: 0.5rem;
+    }
 
     .menuToggle {
         display: none;
