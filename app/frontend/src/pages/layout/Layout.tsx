@@ -13,7 +13,7 @@ interface LayoutProps {
     uiLogo?: string;
 }
 
-const Layout = ({ uiTitle = "AI Chat", uiLogo }: LayoutProps) => {
+const Layout = ({ uiTitle, uiLogo }: LayoutProps) => {
     const { t } = useTranslation();
     const [menuOpen, setMenuOpen] = useState(false);
     const menuRef: RefObject<HTMLDivElement> = useRef(null);
@@ -44,9 +44,10 @@ const Layout = ({ uiTitle = "AI Chat", uiLogo }: LayoutProps) => {
             <header className={styles.header} role={"banner"}>
                 <div className={styles.headerContainer} ref={menuRef}>
                     <Link to="/" className={styles.headerTitleContainer}>
-                        {uiLogo && <img src={uiLogo} alt="Logo" className={styles.logo} />}
-                        <h3 className={styles.headerTitle}>{uiTitle}</h3>
+                        {uiLogo && <img src={uiLogo} alt="logo" height="32" />}
+                        <h3 className={styles.headerTitle}>{uiTitle || t("headerTitle")}</h3>
                     </Link>
+
                     <nav>
                         <ul className={`${styles.headerNavList} ${menuOpen ? styles.show : ""}`}>
                             <li>
