@@ -5,11 +5,10 @@ import { MsalProvider } from "@azure/msal-react";
 import { LoginContext } from "./loginContext";
 import Layout from "./pages/layout/Layout";
 
-const uiTitle = import.meta.env.VITE_UI_TITLE || "My App";
-const uiLogo = import.meta.env.VITE_UI_LOGO;
-
-const LayoutWrapper = () => {
+    const LayoutWrapper = () => {
     const [loggedIn, setLoggedIn] = useState(false);
+    const uiTitle = import.meta.env.VITE_UI_TITLE || "My App";
+    const uiLogo = import.meta.env.VITE_UI_LOGO;
     if (useLogin) {
         var msalInstance = new PublicClientApplication(msalConfig);
 
