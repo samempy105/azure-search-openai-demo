@@ -25,6 +25,12 @@ jobs:
       - name: Build frontend
         run: |
           cd app/frontend
+          echo "VITE_UI_TITLE='${{ secrets.UI_TITLE }}'" >> .env
+          echo "VITE_UI_LOGO='${{ secrets.UI_LOGO }}'" >> .env
+          echo "VITE_UI_FAVICON='${{ secrets.UI_FAVICON }}'" >> .env
+          echo "VITE_UI_CHAT_TITLE='${{ secrets.UI_CHAT_TITLE }}'" >> .env
+          echo "VITE_UI_CHAT_DESCRIPTION='${{ secrets.UI_CHAT_DESCRIPTION }}'" >> .env
+          echo "VITE_UI_CHAT_LOGO='${{ secrets.UI_CHAT_LOGO }}'" >> .env
           npm install
           npm run build
 
