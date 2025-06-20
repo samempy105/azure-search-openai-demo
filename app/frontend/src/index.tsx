@@ -19,11 +19,11 @@ const uiTitle = import.meta.env.VITE_UI_TITLE;
 const router = createHashRouter([
     {
         path: "/",
-        element: <LayoutWrapper uiTitle={uiTitle} uiLogo={uiLogo} />,
+        element: <LayoutWrapper />, // ✅ No props needed here
         children: [
             {
                 index: true,
-                element: <Chat uiLogo={uiLogo} />
+                element: <Chat />
             },
             {
                 path: "qa",
