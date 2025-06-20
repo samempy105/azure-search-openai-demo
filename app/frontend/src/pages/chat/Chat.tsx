@@ -3,14 +3,8 @@ import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet-async";
 import { Panel, DefaultButton } from "@fluentui/react";
 import readNDJSONStream from "ndjson-readablestream";
-interface ChatProps {
-    uiLogo?: string;
-}
-
-const Chat = ({ uiLogo }: ChatProps) => 
 import appLogo from "../../assets/applogo.svg";
 import styles from "./Chat.module.css";
-
 import {
     chatApi,
     configApi,
@@ -40,8 +34,10 @@ import { TokenClaimsDisplay } from "../../components/TokenClaimsDisplay";
 import { LoginContext } from "../../loginContext";
 import { LanguagePicker } from "../../i18n/LanguagePicker";
 import { Settings } from "../../components/Settings/Settings";
-
-const Chat = () => {
+interface ChatProps {
+    uiLogo?: string;
+}
+    const Chat = ({ uiLogo }: ChatProps) => {
     const [isConfigPanelOpen, setIsConfigPanelOpen] = useState(false);
     const [isHistoryPanelOpen, setIsHistoryPanelOpen] = useState(false);
     const [promptTemplate, setPromptTemplate] = useState<string>("");
