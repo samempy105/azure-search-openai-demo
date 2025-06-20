@@ -390,3 +390,4 @@ export function Component(): JSX.Element {
 }
 
 Component.displayName = "Ask";
+export default Ask;
