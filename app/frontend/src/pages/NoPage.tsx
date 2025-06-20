@@ -3,3 +3,4 @@ export function Component(): JSX.Element {
 }
 
 Component.displayName = "NoPage";
+export default NoPage;
