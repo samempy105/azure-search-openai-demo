@@ -1,7 +1,9 @@
 import React from "react";
-export function Component(): JSX.Element {
-    return <h1>No Page Found</h1>;
-}
+
+const NoPage = (): JSX.Element => {
+    return <div>404 - Page Not Found</div>;
+};
 
 NoPage.displayName = "NoPage";
+
 export default NoPage;
