@@ -3,7 +3,11 @@ import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet-async";
 import { Panel, DefaultButton } from "@fluentui/react";
 import readNDJSONStream from "ndjson-readablestream";
+interface ChatProps {
+    uiLogo?: string;
+}
 
+const Chat = ({ uiLogo }: ChatProps) => 
 import appLogo from "../../assets/applogo.svg";
 import styles from "./Chat.module.css";
 
@@ -417,7 +421,7 @@ const Chat = () => {
                 <div className={styles.chatContainer}>
                     {!lastQuestionRef.current ? (
                         <div className={styles.chatEmptyState}>
-                            <img src={appLogo} alt="App logo" width="120" height="120" />
+                            {uiLogo && <img src={uiLogo} alt="App logo" width="120" height="120" />}
 
                             <h1 className={styles.chatEmptyStateTitle}>{t("chatEmptyStateTitle")}</h1>
                             <h2 className={styles.chatEmptyStateSubtitle}>{t("chatEmptyStateSubtitle")}</h2>
