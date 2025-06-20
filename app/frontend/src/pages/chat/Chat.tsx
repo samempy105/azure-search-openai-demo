@@ -419,8 +419,8 @@ interface ChatProps {
                         <div className={styles.chatEmptyState}>
                             {uiLogo && <img src={uiLogo} alt="App logo" width="120" height="120" />}
 
-                            <h1 className={styles.chatEmptyStateTitle}>"Ask Lacey"</h1>
-                            <h2 className={styles.chatEmptyStateSubtitle}>{t("chatEmptyStateSubtitle")}</h2>
+                            <h1 className={styles.chatEmptyStateTitle}>Ask Lacey</h1>
+                            <h2 className={styles.chatEmptyStateSubtitle}> </h2>
                             {showLanguagePicker && <LanguagePicker onLanguageChange={newLang => i18n.changeLanguage(newLang)} />}
                         </div>
                     ) : (
