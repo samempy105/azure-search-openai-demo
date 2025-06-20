@@ -13,22 +13,31 @@ import i18next from "./i18n/config";
 
 initializeIcons();
 
+const uiLogo = import.meta.env.VITE_UI_LOGO;
+const uiTitle = import.meta.env.VITE_UI_TITLE;
+
 const router = createHashRouter([
     {
         path: "/",
-        element: <LayoutWrapper />,
+        element: <LayoutWrapper uiTitle={uiTitle} uiLogo={uiLogo} />,
         children: [
             {
                 index: true,
-                element: <Chat />
+                element: <Chat uiLogo={uiLogo} />
             },
             {
                 path: "qa",
-                lazy: () => import("./pages/ask/Ask")
+                lazy: async () => {
+                    const module = await import("./pages/ask/Ask");
+                    return { Component: module.default };
+                }
             },
             {
                 path: "*",
-                lazy: () => import("./pages/NoPage")
+                lazy: async () => {
+                    const module = await import("./pages/NoPage");
+                    return { Component: module.default };
+                }
             }
         ]
     }
