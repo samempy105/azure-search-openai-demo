@@ -1,4 +1,4 @@
-//
+import appLogo from "./assets/munro-logo.png";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createHashRouter, RouterProvider } from "react-router-dom";
@@ -14,7 +14,7 @@ import i18next from "./i18n/config";
 
 initializeIcons();
 
-const uiLogo = import.meta.env.VITE_UI_LOGO;
+const uiLogo = appLogo;
 const uiTitle = import.meta.env.VITE_UI_TITLE;
 
 const router = createHashRouter([
