@@ -1,3 +1,4 @@
+//export function Ask(): JSX.Element {
 import { useContext, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet-async";
@@ -19,7 +20,7 @@ import { TokenClaimsDisplay } from "../../components/TokenClaimsDisplay";
 import { LoginContext } from "../../loginContext";
 import { LanguagePicker } from "../../i18n/LanguagePicker";
 
-export function Component(): JSX.Element {
+export function Ask(): JSX.Element {
     const [isConfigPanelOpen, setIsConfigPanelOpen] = useState(false);
     const [promptTemplate, setPromptTemplate] = useState<string>("");
     const [promptTemplatePrefix, setPromptTemplatePrefix] = useState<string>("");
@@ -66,7 +67,7 @@ export function Component(): JSX.Element {
     const [answer, setAnswer] = useState<ChatAppResponse>();
     // For the Ask tab, this array will hold a maximum of one URL
     const [speechUrls, setSpeechUrls] = useState<(string | null)[]>([]);
-
+    
     const speechConfig: SpeechConfig = {
         speechUrls,
         setSpeechUrls,
@@ -77,7 +78,6 @@ export function Component(): JSX.Element {
 
     const [activeCitation, setActiveCitation] = useState<string>();
     const [activeAnalysisPanelTab, setActiveAnalysisPanelTab] = useState<AnalysisPanelTabs | undefined>(undefined);
-
     const client = useLogin ? useMsal().instance : undefined;
     const { loggedIn } = useContext(LoginContext);
 
@@ -389,5 +389,5 @@ export function Component(): JSX.Element {
     );
 }
 
-Component.displayName = "Ask";
+Ask.displayName = "Ask";
 export default Ask;
