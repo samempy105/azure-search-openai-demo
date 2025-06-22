@@ -196,6 +196,7 @@ async def ask(auth_claims: dict[str, Any]):
         )
         return jsonify(r)
     except Exception as error:
+        current_app.logger.exception("Unhandled exception in /ask")
         return error_response(error, "/ask")
 
 
@@ -246,6 +247,7 @@ async def chat(auth_claims: dict[str, Any]):
         )
         return jsonify(result)
     except Exception as error:
+        current_app.logger.exception("Unhandled exception in /chat")
         return error_response(error, "/chat")
 
 
