@@ -8,5 +8,8 @@ RUNNING_ON_AZURE = os.getenv("WEBSITE_HOSTNAME") is not None or os.getenv("RUNNI
 
 if not RUNNING_ON_AZURE:
     load_azd_env()
+    
+from azure.monitor.opentelemetry import configure_azure_monitor
+configure_azure_monitor()
 
 app = create_app()
