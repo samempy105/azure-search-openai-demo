@@ -242,6 +242,18 @@ class ChatReadRetrieveReadApproach(ChatApproach):
                 "user_id": user_id,
             }}
         )
+        from_user = auth_claims.get("preferred_username", "unknown_user")
+        source_docs = [r.get(self.sourcepage_field, "unknown_source") for r in results]
+        user_query = messages[-1]["content"]
+        
+        logger.info("Chatbot query event", extra={
+            "custom_dimensions": {
+                "user": from_user,
+                "query": user_query,
+                "sources": source_docs,
+                "timestamp": datetime.utcnow().isoformat()
+            }
+        })
         return extra_info
 
     async def run_agentic_retrieval_approach(
