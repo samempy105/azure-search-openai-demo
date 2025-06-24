@@ -1,3 +1,7 @@
+from opencensus.ext.azure.log_exporter import AzureLogHandler
+import logging
+import os
+from datetime import datetime
 import logging
 from datetime import datetime
 from collections.abc import Awaitable
@@ -19,6 +23,13 @@ from approaches.chatapproach import ChatApproach
 from approaches.promptmanager import PromptManager
 from core.authentication import AuthenticationHelper
 
+logger = logging.getLogger(__name__)
+logger.addHandler(
+    AzureLogHandler(
+        connection_string=os.getenv("APPLICATIONINSIGHTS_CONNECTION_STRING")
+    )
+)
+logger.setLevel(logging.INFO)
 
 class ChatReadRetrieveReadApproach(ChatApproach):
     """
