@@ -1,3 +1,5 @@
+import logging
+from datetime import datetime
 from collections.abc import Awaitable
 from typing import Any, Optional, Union, cast
 
@@ -222,6 +224,23 @@ class ChatReadRetrieveReadApproach(ChatApproach):
                     [result.serialize_for_results() for result in results],
                 ),
             ],
+        )
+        logger = logging.getLogger("app.custom")
+        logger.setLevel(logging.INFO)
+        
+        # Extract sourcepages (or use another field if applicable)
+        source_pages = [doc.sourcepage for doc in results if doc.sourcepage]
+        
+        # If you have auth_claims set up with user info:
+        user_id = auth_claims.get("preferred_username") or auth_claims.get("oid") or "anonymous"
+        
+        logger.info("Chatbot interaction",
+            extra={"custom_dimensions": {
+                "user_question": original_user_query,
+                "source_documents": source_pages,
+                "timestamp": datetime.utcnow().isoformat(),
+                "user_id": user_id,
+            }}
         )
         return extra_info
 
