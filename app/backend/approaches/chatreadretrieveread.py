@@ -259,10 +259,10 @@ class ChatReadRetrieveReadApproach(ChatApproach):
         
         logger.info("Chatbot query event", extra={
             "custom_dimensions": {
-                "user": from_user,
-                "query": user_query,
-                "sources": source_docs,
-                "timestamp": datetime.utcnow().isoformat()
+            "user_question": str(original_user_query),
+            "source_documents": ", ".join(map(str, source_pages)) if isinstance(source_pages, list) else str(source_pages),
+            "user_id": str(user_id),
+            "timestamp": datetime.utcnow().isoformat()
             }
         })
         return extra_info
