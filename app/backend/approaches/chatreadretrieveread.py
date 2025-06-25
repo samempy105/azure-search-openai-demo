@@ -244,15 +244,6 @@ class ChatReadRetrieveReadApproach(ChatApproach):
             str(getattr(r, getattr(self, "sourcepage_field", "sourcepage"), "unknown_source") or "unknown_source")
             for r in results
         ]
-        try:
-            for r in results:
-            print("[DEBUG] dir:", dir(r))
-            try:
-                print("[DEBUG] vars:", vars(r))
-            except TypeError:
-                print("[DEBUG] vars: Not available (object may not be a standard class)")
-        except Exception as e:
-            print("[DEBUG] Failed to inspect results:", e)
         # If you have auth_claims set up with user info:
         user_id = auth_claims.get("preferred_username") or auth_claims.get("oid") or "anonymous"
         from_user = auth_claims.get("preferred_username", "unknown_user")
