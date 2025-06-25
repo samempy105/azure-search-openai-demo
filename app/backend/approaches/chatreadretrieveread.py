@@ -240,7 +240,7 @@ class ChatReadRetrieveReadApproach(ChatApproach):
         logger.setLevel(logging.INFO)
         
         # Extract sourcepages (or use another field if applicable)
-        source_pages = [getattr(doc, self.sourcepage_field, "unknown_source") for doc in results]
+        source_docs = [str(getattr(r, self.sourcepage_field, None) or "unknown_source") for r in results]
         
         # If you have auth_claims set up with user info:
         user_id = auth_claims.get("preferred_username") or auth_claims.get("oid") or "anonymous"
