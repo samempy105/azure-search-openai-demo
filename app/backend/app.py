@@ -102,6 +102,7 @@ from prepdocs import (
 )
 from prepdocslib.filestrategy import UploadUserFileStrategy
 from prepdocslib.listfilestrategy import File
+from opencensus.ext.azure.log_exporter import AzureLogHandler
 
 bp = Blueprint("routes", __name__, static_folder="static")
 # Fix Windows registry issue with mimetypes
@@ -812,6 +813,12 @@ def create_app():
     if os.getenv("APPLICATIONINSIGHTS_CONNECTION_STRING"):
         app.logger.info("APPLICATIONINSIGHTS_CONNECTION_STRING is set, enabling Azure Monitor")
         configure_azure_monitor()
+        azure_handler = AzureLogHandler(
+        connection_string=os.getenv("APPLICATIONINSIGHTS_CONNECTION_STRING")
+        )
+        azure_handler.setLevel(logging.INFO)
+        app.logger.addHandler(azure_handler)
+        logging.getLogger().addHandler(azure_handler)
         # This tracks HTTP requests made by aiohttp:
         AioHttpClientInstrumentor().instrument()
         # This tracks HTTP requests made by httpx:
