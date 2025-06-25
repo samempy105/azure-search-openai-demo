@@ -254,7 +254,8 @@ class ChatReadRetrieveReadApproach(ChatApproach):
             }}
         )
         from_user = auth_claims.get("preferred_username", "unknown_user")
-        source_docs = [r.metadata.get(self.sourcepage_field, "unknown_source") for r in results]
+        print(f"[DEBUG] Document attributes: {dir(r)}")
+        source_docs = [getattr(r, self.sourcepage_field, "unknown_source") for r in results]
         user_query = messages[-1]["content"]
         
         logger.info("Chatbot query event", extra={
