@@ -254,12 +254,6 @@ class ChatReadRetrieveReadApproach(ChatApproach):
             }}
         )
         from_user = auth_claims.get("preferred_username", "unknown_user")
-        if results:
-            for r in results:
-                print("[DEBUG] Document attributes:", dir(r))
-                print("DOC VALUE:", r)
-        else:
-            print("[DEBUG] No results returned from search")
         source_docs = [getattr(r, self.sourcepage_field, "unknown_source") for r in results]
         user_query = messages[-1]["content"]
         
