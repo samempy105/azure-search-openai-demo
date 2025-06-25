@@ -247,10 +247,10 @@ class ChatReadRetrieveReadApproach(ChatApproach):
         
         logger.info("Chatbot interaction",
             extra={"custom_dimensions": {
-                "user_question": original_user_query,
-                "source_documents": source_pages,
+                "user_question": str(original_user_query),
+                "source_documents": ", ".join(map(str, source_pages)) if isinstance(source_pages, list) else str(source_pages),
                 "timestamp": datetime.utcnow().isoformat(),
-                "user_id": user_id,
+                "user_id": str(user_id),
             }}
         )
         from_user = auth_claims.get("preferred_username", "unknown_user")
