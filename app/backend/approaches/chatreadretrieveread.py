@@ -240,22 +240,27 @@ class ChatReadRetrieveReadApproach(ChatApproach):
         logger.setLevel(logging.INFO)
         
         # Extract sourcepages (or use another field if applicable)
-        source_docs = [str(getattr(r, self.sourcepage_field, None) or "unknown_source") for r in results]
-        
+        source_docs = [
+        str(getattr(r, getattr(self, "sourcepage_field", "sourcepage"), "unknown_source") or "unknown_source")
+        for r in results
+        ]
+        for r in results:
+        print("[DEBUG] dir:", dir(r))
+        try:
+            print("[DEBUG] vars:", vars(r))
+        except TypeError:
+        print("[DEBUG] vars: Not available (object may not be a standard class)")
         # If you have auth_claims set up with user info:
         user_id = auth_claims.get("preferred_username") or auth_claims.get("oid") or "anonymous"
+        from_user = auth_claims.get("preferred_username", "unknown_user")
+        user_query = messages[-1]["content"]
         
         logger.info("Chatbot interaction", extra={
             "user_question": str(original_user_query),
-            "source_documents": ", ".join(map(str, source_pages)) if isinstance(source_pages, list) else str(source_pages),
+            "source_documents": ", ".join(source_docs),
             "timestamp": datetime.utcnow().isoformat(),
             "user_id": str(user_id),
         })
-        from_user = auth_claims.get("preferred_username", "unknown_user")
-        source_docs = [str(getattr(r, self.sourcepage_field, "unknown_source") or "unknown_source") for r in results]
-
-        user_query = messages[-1]["content"]
-        
         logger.info("Chatbot query event", extra={
             "user": from_user,
             "query": user_query,
