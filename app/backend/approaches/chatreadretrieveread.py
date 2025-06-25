@@ -245,25 +245,21 @@ class ChatReadRetrieveReadApproach(ChatApproach):
         # If you have auth_claims set up with user info:
         user_id = auth_claims.get("preferred_username") or auth_claims.get("oid") or "anonymous"
         
-        logger.info("Chatbot interaction",
-            extra={"custom_dimensions": {
-                "user_question": str(original_user_query),
-                "source_documents": ", ".join(map(str, source_pages)) if isinstance(source_pages, list) else str(source_pages),
-                "timestamp": datetime.utcnow().isoformat(),
-                "user_id": str(user_id),
-            }}
-        )
+        logger.info("Chatbot interaction", extra={
+            "user_question": str(original_user_query),
+            "source_documents": ", ".join(map(str, source_pages)) if isinstance(source_pages, list) else str(source_pages),
+            "timestamp": datetime.utcnow().isoformat(),
+            "user_id": str(user_id),
+        })
         from_user = auth_claims.get("preferred_username", "unknown_user")
         source_docs = [getattr(r, self.sourcepage_field, "unknown_source") for r in results]
         user_query = messages[-1]["content"]
         
         logger.info("Chatbot query event", extra={
-            "custom_dimensions": {
-            "user_question": str(original_user_query),
-            "source_documents": ", ".join(map(str, source_pages)) if isinstance(source_pages, list) else str(source_pages),
-            "user_id": str(user_id),
+            "user": from_user,
+            "query": user_query,
+            "sources": ", ".join(source_docs),
             "timestamp": datetime.utcnow().isoformat()
-            }
         })
         return extra_info
 
