@@ -496,7 +496,7 @@ interface ChatProps {
                     <div className={styles.chatInput}>
                         <QuestionInput
                             clearOnSend
-                            placeholder="Please type in your question here..."
+                            placeholder="Step into the conversation… what can Lacey help you with today?"
                             disabled={isLoading}
                             onSend={question => makeApiRequest(question)}
                             showSpeechInput={showSpeechInput}
