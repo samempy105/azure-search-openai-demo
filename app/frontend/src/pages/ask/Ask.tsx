@@ -10,7 +10,6 @@ import { Answer, AnswerError } from "../../components/Answer";
 import { QuestionInput } from "../../components/QuestionInput";
 import { ExampleList } from "../../components/Example";
 import { AnalysisPanel, AnalysisPanelTabs } from "../../components/AnalysisPanel";
-import { SettingsButton } from "../../components/SettingsButton/SettingsButton";
 import { useLogin, getToken, requireAccessControl } from "../../authConfig";
 import { UploadFile } from "../../components/UploadFile";
 import { Settings } from "../../components/Settings/Settings";
