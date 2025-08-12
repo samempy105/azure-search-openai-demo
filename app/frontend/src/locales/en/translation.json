@@ -40,7 +40,7 @@
         "1": "What is included in my Northwind Health Plus plan that is not in standard?",
         "2": "What happens in a performance review?",
         "3": "What does a Product Manager do?",
-        "placeholder": "Type a new question (e.g. does my plan cover annual eye exams?)"
+        "placeholder": "Step into the conversation… ask us anything about Munro Footwear Group"
     },
     "askTitle": "Ask your data",
     "gpt4vExamples": {
@@ -49,7 +49,7 @@
         "3": "Can you identify any correlation between oil prices and stock market trends?",
         "placeholder": "Example: Does my plan cover annual eye exams?"
     },
-    "generatingAnswer": "Generating answer",
+    "generatingAnswer": "Finding the perfect fit for your question",
     "citationWithColon": "Citation:",
     "followupQuestions": "Follow-up questions:",
 
