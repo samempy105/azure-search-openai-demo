@@ -5,6 +5,7 @@ import { Panel, DefaultButton } from "@fluentui/react";
 import readNDJSONStream from "ndjson-readablestream";
 import appLogo from "../../assets/applogo.svg";
 import styles from "./Chat.module.css";
+import MunroLogo from "../../assets/Munro-Footwear-Group-Logo-Black.webp";
 import {
     chatApi,
     configApi,
@@ -415,8 +416,11 @@ interface ChatProps {
                 <div className={styles.chatContainer}>
                     {!lastQuestionRef.current ? (
                         <div className={styles.chatEmptyState}>
-                            {uiLogo && <img src={uiLogo} alt="App logo" width="120" height="120" />}
-
+                                <img
+                                src={MunroLogo}
+                                alt="Munro Footwear Group"
+                                style={{ height: 64, marginBottom: 8 }}
+                              />
                             <h2 className={styles.chatEmptyStateTitle}>Ask Lacey</h2>
                             <h3 className={styles.chatEmptyStateSubtitle}>Your Munro AI Assistant</h3>
                             {showLanguagePicker && <LanguagePicker onLanguageChange={newLang => i18n.changeLanguage(newLang)} />}
