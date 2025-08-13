@@ -423,7 +423,7 @@ interface ChatProps {
                                 className={styles.chatLogo}
                               />
                             </div>
-                            <h2 className={styles.chatEmptyStateTitle}>Ask Lacey    </h2>
+                            <h2 className={styles.chatEmptyStateTitle}>Ask Lacey</h2>
                             <h3 className={styles.chatEmptyStateSubtitle}>Your Munro AI Assistant</h3>
                             {showLanguagePicker && <LanguagePicker onLanguageChange={newLang => i18n.changeLanguage(newLang)} />}
                         </div>
