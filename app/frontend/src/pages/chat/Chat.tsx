@@ -420,8 +420,6 @@ interface ChatProps {
                               <img
                                 src={MunroLogo}
                                 alt="Munro Footwear Group"
-                                width={96}
-                                height={96}
                                 style={{ display: "inline-block", marginBottom: 8 }}
                               />
                             </div>
