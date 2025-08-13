@@ -7,6 +7,14 @@
     margin-top: 1rem;
 }
 
+.chatLogo {
+  height: 72px;     /* Adjust to desired size */
+  width: auto;      /* Keeps aspect ratio */
+  display: inline-block;
+  margin-bottom: 8px;
+  image-rendering: -webkit-optimize-contrast; /* Sharper on some displays */
+}
+
 .chatRoot {
     flex: 1;
     display: flex;
