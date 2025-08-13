@@ -416,11 +416,15 @@ interface ChatProps {
                 <div className={styles.chatContainer}>
                     {!lastQuestionRef.current ? (
                         <div className={styles.chatEmptyState}>
-                                <img
+                            <div style={{ textAlign: "center" }}>
+                              <img
                                 src={MunroLogo}
                                 alt="Munro Footwear Group"
-                                style={{ height: 64, marginBottom: 8 }}
+                                width={96}
+                                height={96}
+                                style={{ display: "inline-block", marginBottom: 8 }}
                               />
+                            </div>
                             <h2 className={styles.chatEmptyStateTitle}>Ask Lacey</h2>
                             <h3 className={styles.chatEmptyStateSubtitle}>Your Munro AI Assistant</h3>
                             {showLanguagePicker && <LanguagePicker onLanguageChange={newLang => i18n.changeLanguage(newLang)} />}
