@@ -5,7 +5,7 @@ import { Panel, DefaultButton } from "@fluentui/react";
 import readNDJSONStream from "ndjson-readablestream";
 import appLogo from "../../assets/applogo.svg";
 import styles from "./Chat.module.css";
-import MunroLogo from "../../assets/Munro-Footwear-Group-Logo-Black.webp";
+import MunroLogo from "../../assets/munro_footwear_group_logo.jpg";
 import {
     chatApi,
     configApi,
