@@ -420,7 +420,7 @@ interface ChatProps {
                               <img
                                 src={MunroLogo}
                                 alt="Munro Footwear Group"
-                                style={{ display: "inline-block", marginBottom: 8 }}
+                                className={styles.chatLogo}
                               />
                             </div>
                             <h2 className={styles.chatEmptyStateTitle}>Ask Lacey</h2>
