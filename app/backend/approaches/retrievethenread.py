@@ -152,9 +152,22 @@ class RetrieveThenReadApproach(Approach):
         )
 
         text_sources = self.get_sources_content(results, use_semantic_captions, use_image_citation=False)
-
+        # NEW: build citations from results
+        citations: list[dict[str, Optional[str]]] = []
+        for r in results:
+        doc = getattr(r, "document", r)
+        get = doc.get if hasattr(doc, "get") else (lambda k, d=None: doc[k] if k in doc else d)
+    
+        source = get("title") or get("filename") or get(self.sourcepage_field) or get("source")
+        filepath = get("filepath") or get(self.sourcepage_field) or get("filename")
+        url = get("url")  # present in your index (you saw it in Search Explorer)
+    
+        citations.append({"source": source, "filepath": filepath, "url": url})
+    
         return ExtraInfo(
             DataPoints(text=text_sources),
+             return ExtraInfo(
+                 DataPoints(text=text_sources, citations=citations),
             thoughts=[
                 ThoughtStep(
                     "Search using user query",
@@ -202,9 +215,22 @@ class RetrieveThenReadApproach(Approach):
         )
 
         text_sources = self.get_sources_content(results, use_semantic_captions=False, use_image_citation=False)
+            citations: list[dict[str, Optional[str]]] = []
+            for r in results:
+            doc = getattr(r, "document", r)
+            get = doc.get if hasattr(doc, "get") else (lambda k, d=None: doc[k] if k in doc else d)
+        
+            source = get("title") or get("filename") or get(self.sourcepage_field) or get("source")
+            filepath = get("filepath") or get(self.sourcepage_field) or get("filename")
+            url = get("url")
+        
+            citations.append({"source": source, "filepath": filepath, "url": url})
+
 
         extra_info = ExtraInfo(
             DataPoints(text=text_sources),
+            extra_info = ExtraInfo(
+            DataPoints(text=text_sources, citations=citations),
             thoughts=[
                 ThoughtStep(
                     "Use agentic retrieval",
