@@ -4,6 +4,8 @@ from collections.abc import AsyncGenerator, Awaitable
 from dataclasses import dataclass
 from typing import Any, Callable, Optional, TypedDict, Union, cast
 from urllib.parse import urljoin
+from dataclasses import dataclass, field
+from typing import Any, Optional, List, Dict
 
 import aiohttp
 from azure.search.documents.agent.aio import KnowledgeAgentRetrievalClient
@@ -92,14 +94,14 @@ class ThoughtStep:
 
 @dataclass
 class DataPoints:
-    text: Optional[list[str]] = None
-    images: Optional[list] = None
+    text: List[str]
+    citations: List[Dict[str, Optional[str]]] = field(default_factory=list)
 
 
 @dataclass
 class ExtraInfo:
     data_points: DataPoints
-    thoughts: Optional[list[ThoughtStep]] = None
+    thoughts: Optional[list["ThoughtStep"]] = None
     followup_questions: Optional[list[Any]] = None
 
 
