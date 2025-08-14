@@ -841,5 +841,24 @@ def create_app():
         if len(allowed_origins) > 0:
             app.logger.info("CORS enabled for %s", allowed_origins)
             cors(app, allow_origin=allowed_origins, allow_methods=["GET", "POST"])
+        #Added SI
+        # Allow embedding in SharePoint
+    @app.after_request
+    async def allow_sharepoint_iframe(response):
+        # Remove clickjacking header if present
+        response.headers.pop("X-Frame-Options", None)
 
+        # Build CSP frame-ancestors
+        sp_ancestors = os.getenv("ALLOWED_FRAME_ANCESTORS", "").strip()
+        me = f"https://{os.getenv('WEBSITE_HOSTNAME')}" if os.getenv("WEBSITE_HOSTNAME") else "'self'"
+
+        if sp_ancestors:
+            existing = response.headers.get("Content-Security-Policy", "")
+            parts = [p.strip() for p in existing.split(";") if p.strip() and not p.strip().lower().startswith("frame-ancestors")]
+            parts.append(f"frame-ancestors {me} {sp_ancestors}")
+            response.headers["Content-Security-Policy"] = "; ".join(parts)
+
+        return response
+
+        #Added SI
     return app
