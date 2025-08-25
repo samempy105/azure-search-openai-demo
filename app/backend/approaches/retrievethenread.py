@@ -154,10 +154,15 @@ class RetrieveThenReadApproach(Approach):
 
         # Build citations from Document objects
         citations: list[dict[str, Optional[str]]] = []
+        
         for r in results:
+
+            doc = getattr(r, "document", r)
+            
             source = r.sourcepage or r.sourcefile
             filepath = r.sourcepage or r.sourcefile
             url = None  # Add later if you store URLs in your index
+            
             citations.append({"source": source, "filepath": filepath, "url": url})
 
         return ExtraInfo(
@@ -212,10 +217,15 @@ class RetrieveThenReadApproach(Approach):
 
         # Build citations from Document objects
         citations: list[dict[str, Optional[str]]] = []
+        
         for r in results:
+
+            doc = getattr(r, "document", r)
+            
             source = r.sourcepage or r.sourcefile
             filepath = r.sourcepage or r.sourcefile
-            url = None  # Add later if your index stores URLs
+            url = None  # Add later if you store URLs in your index
+            
             citations.append({"source": source, "filepath": filepath, "url": url})
 
 
