@@ -14,7 +14,7 @@ from core.authentication import AuthenticationHelper
 class RetrieveThenReadApproach(Approach):
     """
     Simple retrieve-then-read implementation, using the AI Search and OpenAI APIs directly. It first retrieves
-    top documents from search, then constructs a prompt with them, and then uses OpenAI to generate an completion
+    top documents from search, then constructs a prompt with them, and then uses OpenAI to generate a completion
     (answer) with that prompt.
     """
 
@@ -82,8 +82,8 @@ class RetrieveThenReadApproach(Approach):
         else:
             extra_info = await self.run_search_approach(messages, overrides, auth_claims)
 
-        # Process results
-        messages = self.prompt_manager.render_prompt(
+        # Build final answer prompt
+        rendered_messages = self.prompt_manager.render_prompt(
             self.answer_prompt,
             self.get_system_prompt_variables(overrides.get("prompt_template"))
             | {"user_query": q, "text_sources": extra_info.data_points.text},
@@ -94,7 +94,7 @@ class RetrieveThenReadApproach(Approach):
             await self.create_chat_completion(
                 self.chatgpt_deployment,
                 self.chatgpt_model,
-                messages=messages,
+                messages=rendered_messages,
                 overrides=overrides,
                 response_token_limit=self.get_response_token_limit(self.chatgpt_model, 1024),
             ),
@@ -102,7 +102,7 @@ class RetrieveThenReadApproach(Approach):
         extra_info.thoughts.append(
             self.format_thought_step_for_chatcompletion(
                 title="Prompt to generate answer",
-                messages=messages,
+                messages=rendered_messages,
                 overrides=overrides,
                 model=self.chatgpt_model,
                 deployment=self.chatgpt_deployment,
@@ -129,7 +129,7 @@ class RetrieveThenReadApproach(Approach):
         top = overrides.get("top", 3)
         minimum_search_score = overrides.get("minimum_search_score", 0.0)
         minimum_reranker_score = overrides.get("minimum_reranker_score", 0.0)
-        filter = self.build_filter(overrides, auth_claims)
+        filter_ = self.build_filter(overrides, auth_claims)
         q = str(messages[-1]["content"])
 
         # If retrieval mode includes vectors, compute an embedding for the query
@@ -140,7 +140,7 @@ class RetrieveThenReadApproach(Approach):
         results = await self.search(
             top,
             q,
-            filter,
+            filter_,
             vectors,
             use_text_search,
             use_vector_search,
@@ -152,22 +152,21 @@ class RetrieveThenReadApproach(Approach):
         )
 
         text_sources = self.get_sources_content(results, use_semantic_captions, use_image_citation=False)
-        # NEW: build citations from results
+
+        # Build citations from results
         citations: list[dict[str, Optional[str]]] = []
         for r in results:
-        doc = getattr(r, "document", r)
-        get = doc.get if hasattr(doc, "get") else (lambda k, d=None: doc[k] if k in doc else d)
-    
-        source = get("title") or get("filename") or get(self.sourcepage_field) or get("source")
-        filepath = get("filepath") or get(self.sourcepage_field) or get("filename")
-        url = get("url")  # present in your index (you saw it in Search Explorer)
-    
-        citations.append({"source": source, "filepath": filepath, "url": url})
-    
+            doc = getattr(r, "document", r)
+            get = doc.get if hasattr(doc, "get") else (lambda k, d=None: doc[k] if k in doc else d)
+
+            source = get("title") or get("filename") or get(self.sourcepage_field) or get("source")
+            filepath = get("filepath") or get(self.sourcepage_field) or get("filename")
+            url = get("url")
+
+            citations.append({"source": source, "filepath": filepath, "url": url})
+
         return ExtraInfo(
-            DataPoints(text=text_sources),
-             return ExtraInfo(
-                 DataPoints(text=text_sources, citations=citations),
+            DataPoints(text=text_sources, citations=citations),
             thoughts=[
                 ThoughtStep(
                     "Search using user query",
@@ -177,7 +176,7 @@ class RetrieveThenReadApproach(Approach):
                         "use_semantic_ranker": use_semantic_ranker,
                         "use_query_rewriting": use_query_rewriting,
                         "top": top,
-                        "filter": filter,
+                        "filter": filter_,
                         "use_vector_search": use_vector_search,
                         "use_text_search": use_text_search,
                     },
@@ -215,21 +214,20 @@ class RetrieveThenReadApproach(Approach):
         )
 
         text_sources = self.get_sources_content(results, use_semantic_captions=False, use_image_citation=False)
-            citations: list[dict[str, Optional[str]]] = []
-            for r in results:
+
+        # Build citations from results
+        citations: list[dict[str, Optional[str]]] = []
+        for r in results:
             doc = getattr(r, "document", r)
             get = doc.get if hasattr(doc, "get") else (lambda k, d=None: doc[k] if k in doc else d)
-        
+
             source = get("title") or get("filename") or get(self.sourcepage_field) or get("source")
             filepath = get("filepath") or get(self.sourcepage_field) or get("filename")
             url = get("url")
-        
+
             citations.append({"source": source, "filepath": filepath, "url": url})
 
-
         extra_info = ExtraInfo(
-            DataPoints(text=text_sources),
-            extra_info = ExtraInfo(
             DataPoints(text=text_sources, citations=citations),
             thoughts=[
                 ThoughtStep(
