@@ -52,7 +52,6 @@ class RetrieveThenReadApproach(Approach):
         self.chatgpt_model = chatgpt_model
         self.embedding_model = embedding_model
         self.embedding_dimensions = embedding_dimensions
-        self.chatgpt_deployment = chatgpt_deployment
         self.embedding_deployment = embedding_deployment
         self.embedding_field = embedding_field
         self.sourcepage_field = sourcepage_field
@@ -153,16 +152,12 @@ class RetrieveThenReadApproach(Approach):
 
         text_sources = self.get_sources_content(results, use_semantic_captions, use_image_citation=False)
 
-        # Build citations from results
+        # Build citations from Document objects
         citations: list[dict[str, Optional[str]]] = []
         for r in results:
-            doc = getattr(r, "document", r)
-            get = doc.get if hasattr(doc, "get") else (lambda k, d=None: doc[k] if k in doc else d)
-
-            source = get("title") or get("filename") or get(self.sourcepage_field) or get("source")
-            filepath = get("filepath") or get(self.sourcepage_field) or get("filename")
-            url = get("url")
-
+            source = r.sourcepage or r.sourcefile
+            filepath = r.sourcepage or r.sourcefile
+            url = None  # Add later if you store URLs in your index
             citations.append({"source": source, "filepath": filepath, "url": url})
 
         return ExtraInfo(
@@ -215,17 +210,14 @@ class RetrieveThenReadApproach(Approach):
 
         text_sources = self.get_sources_content(results, use_semantic_captions=False, use_image_citation=False)
 
-        # Build citations from results
+        # Build citations from Document objects
         citations: list[dict[str, Optional[str]]] = []
         for r in results:
-            doc = getattr(r, "document", r)
-            get = doc.get if hasattr(doc, "get") else (lambda k, d=None: doc[k] if k in doc else d)
-
-            source = get("title") or get("filename") or get(self.sourcepage_field) or get("source")
-            filepath = get("filepath") or get(self.sourcepage_field) or get("filename")
-            url = get("url")
-
+            source = r.sourcepage or r.sourcefile
+            filepath = r.sourcepage or r.sourcefile
+            url = None  # Add later if your index stores URLs
             citations.append({"source": source, "filepath": filepath, "url": url})
+
 
         extra_info = ExtraInfo(
             DataPoints(text=text_sources, citations=citations),
