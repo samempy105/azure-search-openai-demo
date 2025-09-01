@@ -151,20 +151,14 @@ class RetrieveThenReadApproach(Approach):
         )
 
         text_sources = self.get_sources_content(results, use_semantic_captions, use_image_citation=False)
-
         # Build citations from Document objects
         citations: list[dict[str, Optional[str]]] = []
-        
         for r in results:
-
             doc = getattr(r, "document", r)
-            
             source = r.sourcepage or r.sourcefile
             filepath = r.sourcepage or r.sourcefile
             url = None  # Add later if you store URLs in your index
-            
             citations.append({"source": source, "filepath": filepath, "url": url})
-
         return ExtraInfo(
             DataPoints(text=text_sources, citations=citations),
             thoughts=[
@@ -212,23 +206,15 @@ class RetrieveThenReadApproach(Approach):
             max_docs_for_reranker=max_docs_for_reranker,
             results_merge_strategy=results_merge_strategy,
         )
-
         text_sources = self.get_sources_content(results, use_semantic_captions=False, use_image_citation=False)
-
         # Build citations from Document objects
         citations: list[dict[str, Optional[str]]] = []
-        
         for r in results:
-
             doc = getattr(r, "document", r)
-            
             source = r.sourcepage or r.sourcefile
             filepath = r.sourcepage or r.sourcefile
             url = None  # Add later if you store URLs in your index
-            
             citations.append({"source": source, "filepath": filepath, "url": url})
-
-
         extra_info = ExtraInfo(
             DataPoints(text=text_sources, citations=citations),
             thoughts=[
