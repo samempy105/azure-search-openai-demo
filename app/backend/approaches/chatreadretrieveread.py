@@ -1,10 +1,7 @@
-from opencensus.ext.azure.log_exporter import AzureLogHandler
 import logging
 import os
-from datetime import datetime
-import logging
-from datetime import datetime
 from collections.abc import Awaitable
+from datetime import datetime
 from typing import Any, Optional, Union, cast
 
 from azure.search.documents.agent.aio import KnowledgeAgentRetrievalClient
@@ -17,6 +14,7 @@ from openai.types.chat import (
     ChatCompletionMessageParam,
     ChatCompletionToolParam,
 )
+from opencensus.ext.azure.log_exporter import AzureLogHandler
 
 from approaches.approach import DataPoints, ExtraInfo, ThoughtStep
 from approaches.chatapproach import ChatApproach

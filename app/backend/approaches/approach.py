@@ -1,11 +1,9 @@
 import os
 from abc import ABC
 from collections.abc import AsyncGenerator, Awaitable
-from dataclasses import dataclass
-from typing import Any, Callable, Optional, TypedDict, Union, cast
-from urllib.parse import urljoin
 from dataclasses import dataclass, field
-from typing import Any, Optional, List, Dict
+from typing import Any, Callable, Dict, List, Optional, TypedDict, Union, cast
+from urllib.parse import urljoin
 
 import aiohttp
 from azure.search.documents.agent.aio import KnowledgeAgentRetrievalClient
